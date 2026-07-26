@@ -3,6 +3,7 @@ on:
   push:
     branches: [ "main" ]
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,7 +32,8 @@ jobs:
           jarsigner -keystore debug.keystore \
             -storepass android -keypass android \
             app/build/outputs/apk/release/app-release-unsigned.apk debug
-          cp app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/UsbBackup.apk
+          cp app/build/outputs/apk/release/app-release-unsigned.apk \
+            app/build/outputs/apk/release/UsbBackup.apk
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
