@@ -136,21 +136,11 @@ if ! "$cygwin" && ! "$darwin" && ! "$nonstop" ; then
     esac
 fi
 
-# Collect all arguments for the java command, stracks://stacking and the
-# processing rules specified in the Gradle wrapper script.
-DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
+# Collect all arguments for the java command, stacking them in order
+ADDITIONAL_ARGS=""
 
-# Collect all arguments for the java command;
-#   * $DEFAULT_JVM_OPTS, custom JVM options
-#   * $JAVA_OPTS, environment variable (not used)
-#   * $GRADLE_OPTS, environment variable
-#   * $APP_HOME/gradle/gradle.properties (if it exists)
-#   * all remaining command-line arguments
-
-# Allow disables daemon
-if [ "$GRADLE_DAEMON_CTRL" = "stop" ] ; then
-    DEFAULT_JVM_OPTS="$DEFAULT_JVM_OPTS -Dgradle.daemon=false"
-fi
+# Determine whether to use JVM defaults
+DEFAULT_JVM_OPTS='-Xmx64m -Xms64m'
 
 # For Cygwin or MSYS, switch paths to Windows format before running java
 if "$cygwin" || "$msys" ; then
@@ -161,24 +151,15 @@ if "$cygwin" || "$msys" ; then
     # Now convert the arguments - kludging to work around the shell's
     # inability to preserve quotes.
     CLASSPATH=$( cygpath --path --mixed "$CLASSPATH" )
-
 fi
 
-# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
-DEFAULT_JVM_OPTS='-Xmx64m -Xms64m'
-
-# Collect all arguments for the java command;
-#   * $DEFAULT_JVM_OPTS, $JAVA_OPTS, and $GRADLE_OPTS can contain fragments of
-#     shell script including quotes and/or backslashes, so put them in
-#     temporary variables.
-#   * Put the arguments into a shell array if possible, and eval them to handle quoting.
+# Collect all arguments for the java command
 if [ -n "$JAVA_OPTS" ] ; then
-    set -- "$@" "$JAVA_OPTS"
+    ADDITIONAL_ARGS="$ADDITIONAL_ARGS $JAVA_OPTS"
 fi
 if [ -n "$GRADLE_OPTS" ] ; then
-    set -- "$@" "$GRADLE_OPTS"
+    ADDITIONAL_ARGS="$ADDITIONAL_ARGS $GRADLE_OPTS"
 fi
 
-eval set -- $DEFAULT_JVM_OPTS "$@"
-
-exec "$JAVACMD" "$@"
+# Execute Gradle
+exec "$JAVACMD" $DEFAULT_JVM_OPTS $ADDITIONAL_ARGS -classpath "$CLASSPATH" org.gradle.wrapper.GradleWrapperMain "$@"
