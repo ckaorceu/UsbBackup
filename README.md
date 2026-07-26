@@ -1,5 +1,5 @@
 # UsbBackup
 
-USB Backup App for Android
+Android USB backup application.
 
-Build: v2
+Build: v3 (fixed workflow YAML)
