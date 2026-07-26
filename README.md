@@ -2,4 +2,4 @@
 
 Android USB backup application.
 
-Build: v4 (simplified workflow)
+Build: v5 (chmod +x gradlew)
