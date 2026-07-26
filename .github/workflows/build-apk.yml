@@ -13,18 +13,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - uses: android-actions/setup-android@v3
-      - name: Generate wrapper
-        run: |
-          curl -sL -o gradle/wrapper/gradle-wrapper.jar https://github.com/gradle/gradle/raw/v8.0.0/gradle/wrapper/gradle-wrapper.jar
-          cat > gradlew << 'SCRIPT'
-#!/bin/sh
-CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
-exec java -classpath "$CLASSPATH" org.gradle.wrapper.GradleWrapperMain "$@"
-SCRIPT
-          chmod +x gradlew
-      - name: Build
+      - name: Build with Gradle
         run: ./gradlew assembleRelease
-      - name: Sign
+      - name: Sign APK
         run: |
           keytool -genkey -v -keystore debug.keystore -alias debug -keyalg RSA -keysize 2048 -validity 3650 -storepass android -keypass android -dname "CN=Debug,O=Debug,C=US"
           jarsigner -keystore debug.keystore -storepass android -keypass android app/build/outputs/apk/release/app-release-unsigned.apk debug
